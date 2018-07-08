@@ -1,0 +1,1 @@
+# karma-allresult-csv-reporter
