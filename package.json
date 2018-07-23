@@ -1,6 +1,6 @@
 {
   "name": "karma-allresult-csv-reporter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Karma plugin. Output all test results to CSV.",
   "main": "index.js",
   "scripts": {
