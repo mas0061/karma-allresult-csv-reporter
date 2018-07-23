@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var AllresultCSVReporter = function(baseReporterDecorator, config, logger, helper, formatError) {
+var AllresultCSVReporter = function(baseReporterDecorator, config, logger) {
   var log = logger.create('reporter.allresultcsv');
   var arcsvConfig = config.allresultCsvReporter || {};
   var outputDir = arcsvConfig.outputDir || '.';
@@ -10,16 +10,14 @@ var AllresultCSVReporter = function(baseReporterDecorator, config, logger, helpe
 
   baseReporterDecorator(this);
 
-  this.adapters = [function(msg) {
-    process.stdout.write.bind(process.stdout)(msg + '\n');
-  }];
+  this.adapters = [];
 
   this.onRunComplete = function(browserCollection, results) {
     fs.writeFile(`${outputDir}/${outputFile}`, result4csv.join(''), err => {
       if (err) {
-        console.error(err);
+        log.error(err);
       } else {
-        this.write(`write all results to ${outputFile}`);
+        log.info(`write all results to ${outputFile}`);
       }
     });
   };
@@ -37,7 +35,7 @@ var AllresultCSVReporter = function(baseReporterDecorator, config, logger, helpe
   };
 }
 
-AllresultCSVReporter.$inject = ['baseReporterDecorator', 'config', 'logger', 'helper', 'formatError'];
+AllresultCSVReporter.$inject = ['baseReporterDecorator', 'config', 'logger'];
 module.exports = {
   'reporter:allresultcsv': ['type', AllresultCSVReporter]
 };
